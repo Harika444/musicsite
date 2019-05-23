@@ -1,1 +1,11 @@
 
+pipeline {
+agent { label 'Windows'}
+stages {
+stage('source code checkout') {
+steps {
+git 'https://github.com/Harika444/musicsite.git'
+}
+}
+}
+}
