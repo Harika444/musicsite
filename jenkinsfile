@@ -1,6 +1,9 @@
 
 pipeline {
 agent any
+tools {
+tool name: 'SonarQube', type: 'hudson.plugins.sonar.MsBuildSQRunnerInstallation'
+}
 stages {
 stage('source code checkout') {
 steps {
