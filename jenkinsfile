@@ -8,20 +8,15 @@ git 'https://github.com/Harika444/musicsite.git'
 }
 }
 
-stage('Build + SonarQube analysis') {
-steps{
-bat 'make'
-SonarScanner.MSBuild.exe begin { /k:"musicsite" } 
-
-powershell label: '', script: '''Remove-Item c:\\webpackage -Recurse -ErrorAction Ignore
-
-C:\\MSBuild\\MSBuild\\15.0\\Bin\\MSBuild.exe "C:\\Program Files (x86)\\Jenkins\\workspace\\musicsite\\MusicSite\\MusicSite.csproj" {/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="c:\\webpackage" /p:DeployIisAppPath="Default Web Site"}
-
-Copy-Item  -Path "C:\\webpackage\\MusicSite.zip" -Destination "C:\\Program Files (x86)\\Jenkins\\workspace\\musicsite\\" -Recurse -force ''''
-
-SonarScanner.MSBuild.exe end
+stage('nexus artifacts'){
+nexusPublisher
+ nexusInstanceId: 'nexus',
+ nexusRepositoryId: 'musicsite',
+ packages: [[$class: 'MavenPackage',
+ mavenAssetList: [[classifier: '', extension: '', filePath: 'C:\\webpackage\\MusicSite.zip']],
+ mavenCoordinate: [artifactId: 'musicsite', groupId: 'com.cicd', packaging: 'zip', version: '${BUILD_NUMBER}']]]
 }
-}
+
 
 }
 }
