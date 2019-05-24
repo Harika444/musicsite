@@ -8,25 +8,24 @@ git 'https://github.com/Harika444/musicsite.git'
 }
 }
 
-
-
-stage('nexus artifacts'){
+stage('Build + SonarQube analysis') {
 steps{
-nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'musicsite', packages: [[$class: 'MavenPackage',mavenAssetList: [[classifier: '', extension: '', filePath: 'C:\\webpackage\\MusicSite.zip']],
- mavenCoordinate: [artifactId: 'musicsite', groupId: 'com.cicd', packaging: 'zip', version: '${BUILD_NUMBER}']]]
-}
-}
 
-stage('deploy') {
-steps {
-powershell label: '', script: '''Remove-Item -Path C:\\webpackage\\MusicSite -Recurse -Force
-Add-Type -AssemblyName System.IO.Compression.FileSystem
-[System.IO.Compression.ZipFile]::ExtractToDirectory(\'C:\\webpackage\\MusicSite.zip\', \'C:\\webpackage\\MusicSite\') 
-$Source = "C:\\webpackage\\MusicSite\\Content\\C_C\\Program Files (x86)\\Jenkins\\workspace\\musicsite\\MusicSite\\obj\\Debug\\Package\\PackageTmp\\*"
-Remove-Item -Path C:\\inetpub\\wwwroot\\musicsite\\* -Recurse -Force
-$Dest   = "C:\\inetpub\\wwwroot\\musicsite"
-Copy-Item -Recurse -Path $Source -Destination $Dest
-'''
+SonarScanner.MSBuild.exe begin {/k:musicsite}
+ 
+powershell label: '', script: '''Remove-Item c:\\webpackage -Recurse -ErrorAction Ignore
+
+C:\\MSBuild\\MSBuild\\15.0\\Bin\\MSBuild.exe "C:\\Program Files (x86)\\Jenkins\\workspace\\musicsite\\MusicSite\\MusicSite.csproj" 
+DeployOnBuild=true 
+WebPublishMethod=Package 
+PackageAsSingleFile=true 
+SkipInvalidConfigurations=true 
+PackageLocation="c:\\webpackage" 
+DeployIisAppPath="Default Web Site"
+
+Copy-Item  -Path "C:\\webpackage\\MusicSite.zip" -Destination "C:\\Program Files (x86)\\Jenkins\\workspace\\musicsite\\" -Recurse -force '''
+
+SonarScanner.MSBuild.exe end
 }
 }
 
