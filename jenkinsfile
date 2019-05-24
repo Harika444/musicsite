@@ -15,6 +15,18 @@ nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'musicsite', package
 }
 }
 
+stage('deploy') {
+steps {
+powershell label: '', script: '''Remove-Item -Path C:\\webpackage\\MusicSite -Recurse -Force
+Add-Type -AssemblyName System.IO.Compression.FileSystem
+[System.IO.Compression.ZipFile]::ExtractToDirectory(\'C:\\webpackage\\MusicSite.zip\', \'C:\\webpackage\\MusicSite\') 
+$Source = "C:\\webpackage\\MusicSite\\Content\\C_C\\Program Files (x86)\\Jenkins\\workspace\\musicsite\\MusicSite\\obj\\Debug\\Package\\PackageTmp\\*"
+Remove-Item -Path C:\\inetpub\\wwwroot\\musicsite\\* -Recurse -Force
+$Dest   = "C:\\inetpub\\wwwroot\\musicsite"
+Copy-Item -Recurse -Path $Source -Destination $Dest
+'''
+}
+}
 
 }
 }
