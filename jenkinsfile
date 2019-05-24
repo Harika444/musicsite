@@ -14,14 +14,10 @@ bat 'make'
 SonarScanner.MSBuild.exe begin { /k:"musicsite" } 
 
 powershell label: '', script: '''Remove-Item c:\\webpackage -Recurse -ErrorAction Ignore
-C:\\MSBuild\\MSBuild\\15.0\\Bin\\MSBuild.exe "C:\\Program Files (x86)\\Jenkins\\workspace\\musicsite\\MusicSite\\MusicSite.csproj" 
-/p:DeployOnBuild=true 
-/p:WebPublishMethod=Package 
-/p:PackageAsSingleFile=true 
-/p:SkipInvalidConfigurations=true 
-/p:PackageLocation="c:\\webpackage" 
-/p:DeployIisAppPath="Default Web Site"
-Copy-Item  -Path "C:\\webpackage\\MusicSite.zip" -Destination "C:\\Program Files (x86)\\Jenkins\\workspace\\musicsite\\" -Recurse -force '''
+
+C:\\MSBuild\\MSBuild\\15.0\\Bin\\MSBuild.exe "C:\\Program Files (x86)\\Jenkins\\workspace\\musicsite\\MusicSite\\MusicSite.csproj" /p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="c:\\webpackage" /p:DeployIisAppPath="Default Web Site"
+
+Copy-Item  -Path "C:\\webpackage\\MusicSite.zip" -Destination "C:\\Program Files (x86)\\Jenkins\\workspace\\musicsite\\" -Recurse -force ''''
 
 SonarScanner.MSBuild.exe end
 }
