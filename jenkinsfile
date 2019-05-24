@@ -13,9 +13,9 @@ steps{
 
 SonarScanner.MSBuild.exe begin {/k:musicsite}
  
-powershell label: '', script: '''Remove-Item c:\\webpackage -Recurse -ErrorAction Ignore
+powershell label: '', script: '''Remove-Item c:/webpackage -Recurse -ErrorAction Ignore
 
-C:\\MSBuild\\MSBuild\\15.0\\Bin\\MSBuild.exe "C:\\Program Files (x86)\\Jenkins\\workspace\\musicsite\\MusicSite\\MusicSite.csproj" 
+C:/MSBuild/MSBuild/15.0/Bin/MSBuild.exe "C:/Program Files (x86)/Jenkins/workspace/musicsite/MusicSite/MusicSite.csproj" 
 DeployOnBuild=true 
 WebPublishMethod=Package 
 PackageAsSingleFile=true 
@@ -23,7 +23,7 @@ SkipInvalidConfigurations=true
 PackageLocation="c:\\webpackage" 
 DeployIisAppPath="Default Web Site"
 
-Copy-Item  -Path "C:\\webpackage\\MusicSite.zip" -Destination "C:\\Program Files (x86)\\Jenkins\\workspace\\musicsite\\" -Recurse -force '''
+Copy-Item  -Path "C:/webpackage/MusicSite.zip" -Destination "C:/Program Files (x86)/Jenkins/workspace/musicsite/" -Recurse -force '''
 
 SonarScanner.MSBuild.exe end
 }
