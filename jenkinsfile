@@ -11,7 +11,7 @@ git 'https://github.com/Harika444/musicsite.git'
 stage('Build + SonarQube analysis') {
 steps{
 
-SonarScanner.MSBuild.exe begin [/k:"musicsite", /n:"musicsite", /v:"1.0"] 
+SonarScanner.MSBuild.exe begin /k:"musicsite" /n:"musicsite" /v:"1.0"
 
  
 powershell label: '', script: '''Remove-Item c:\\webpackage -Recurse -ErrorAction Ignore
