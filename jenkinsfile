@@ -9,11 +9,7 @@ git 'https://github.com/Harika444/musicsite.git'
 }
 
 stage('nexus artifacts'){
-nexusPublisher
- nexusInstanceId: 'nexus',
- nexusRepositoryId: 'musicsite',
- packages: [[$class: 'MavenPackage',
- mavenAssetList: [[classifier: '', extension: '', filePath: 'C:\\webpackage\\MusicSite.zip']],
+nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'musicsite', packages: [[$class: 'MavenPackage',mavenAssetList: [[classifier: '', extension: '', filePath: 'C:\\webpackage\\MusicSite.zip']],
  mavenCoordinate: [artifactId: 'musicsite', groupId: 'com.cicd', packaging: 'zip', version: '${BUILD_NUMBER}']]]
 }
 
