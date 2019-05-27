@@ -20,7 +20,7 @@ DeployOnBuild=true
 WebPublishMethod=Package 
 PackageAsSingleFile=true 
 SkipInvalidConfigurations=true 
-PackageLocation="c:/webpackage" 
+PackageLocation="c:\webpackage" 
 DeployIisAppPath="Default Web Site"
 
 Copy-Item  -Path "C:/webpackage/MusicSite.zip" -Destination "C:/Program Files (x86)/Jenkins/workspace/musicsite/" -Recurse -force'''
