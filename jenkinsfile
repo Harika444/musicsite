@@ -11,20 +11,14 @@ git 'https://github.com/Harika444/musicsite.git'
 stage('Build + SonarQube analysis') {
 steps{
 
-
- 
-powershell label: '', script: '''powershell label: '', script: '''Remove-Item c:/webpackage -Recurse -ErrorAction Ignore
-
-C:/MSBuild/MSBuild/15.0/Bin/MSBuild.exe "C:/Program Files (x86)/Jenkins/workspace/musicsite/MusicSite/MusicSite.csproj" 
-DeployOnBuild=true 
-WebPublishMethod=Package 
-PackageAsSingleFile=true 
-SkipInvalidConfigurations=true 
-PackageLocation="c:\webpackage" 
-DeployIisAppPath="Default Web Site"
-
-Copy-Item  -Path "C:/webpackage/MusicSite.zip" -Destination "C:/Program Files (x86)/Jenkins/workspace/musicsite/" -Recurse -force'''
-
+powershell label: '', script: '''Remove-Item -Path C:\\webpackage\\MusicSite -Recurse -Force
+Add-Type -AssemblyName System.IO.Compression.FileSystem
+[System.IO.Compression.ZipFile]::ExtractToDirectory(\'C:\\webpackage\\MusicSite.zip\', \'C:\\webpackage\\MusicSite\') 
+$Source = "C:\\webpackage\\MusicSite\\Content\\C_C\\Program Files (x86)\\Jenkins\\workspace\\musicsite\\MusicSite\\obj\\Debug\\Package\\PackageTmp\\*"
+Remove-Item -Path C:\\inetpub\\wwwroot\\musicsite\\* -Recurse -Force
+$Dest   = "C:\\inetpub\\wwwroot\\musicsite"
+Copy-Item -Recurse -Path $Source -Destination $Dest
+'''
 
 }
 }
