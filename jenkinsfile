@@ -27,23 +27,16 @@ stage('nexus artifacts'){
 steps{
 nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'musicsite', packages: [[$class: 'MavenPackage',mavenAssetList: [[classifier: '', extension: '', filePath: 'C:\\webpackage\\MusicSite.zip']],
  mavenCoordinate: [artifactId: 'musicsite', groupId: 'com.cicd', packaging: 'zip', version: '${BUILD_NUMBER}']]]
- post {
-            success {
-                echo 'Compile Stage Successful . . .'
-            }
-            failure {
-                echo 'Compile stage failed'
-                error('Stopping early…')
-
-             }
-    }              
-    timeout(time: 10, unit: 'MINUTES') {
-                input(id: "Deploy Gate", message: "Deploy ${params.musicsite}?", ok: 'Deploy')
-                }   
+     
 }
 }
 
 stage('deploy') {
+ when {
+                branch "master"
+                environment name: "IS_NEW_VERSION", value: "YES"
+            }
+
 steps {
 powershell label: '', script: '''Remove-Item -Path C:\\webpackage\\MusicSite -Recurse -Force
 Add-Type -AssemblyName System.IO.Compression.FileSystem
