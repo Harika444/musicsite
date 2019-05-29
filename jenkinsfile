@@ -25,8 +25,8 @@ Copy-Item -Recurse -Path $Source -Destination $Dest
 
 stage('nexus artifacts'){
 steps{
-nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'musicsite', packages: [[$class: 'MavenPackage',mavenAssetList: [[classifier: '', extension: '', filePath: 'C:\\webpackage\\MusicSite.zip']],
- mavenCoordinate: [artifactId: 'musicsite', groupId: 'com.cicd', packaging: 'zip', version: '${BUILD_NUMBER}']]]
+nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'musicsite_JF', packages: [[$class: 'MavenPackage',mavenAssetList: [[classifier: '', extension: '', filePath: 'C:\\webpackage\\MusicSite.zip']],
+ mavenCoordinate: [artifactId: 'musicsite_jf', groupId: 'com.cicd', packaging: 'zip', version: '${BUILD_NUMBER}']]]
 }
 }
 
