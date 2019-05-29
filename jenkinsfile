@@ -30,9 +30,8 @@ nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'musicsite_JF', pack
 }
 }
 stage('Approval') {	
- 	timeout(time:3, unit:'DAYS') {	
- 	input 'Do I have your approval for deployment?'	
- 	}	
+ 	timeout(time:5, unit:'DAYS') {
+    input message:'Approve deployment?', submitter: 'it-ops'
  	} 
 
 stage('deploy') {
