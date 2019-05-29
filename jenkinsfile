@@ -30,10 +30,12 @@ nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'musicsite_JF', pack
 }
 }
 stage('Approval') {	
- 	timeout(time:5, unit:'DAYS') {
-    input message:'Approve deployment?', submitter: 'it-ops'
+            input {
+                message "Should we continue?"
+                ok "Yes, we should."
+                submitter "it-person"
  	} 
-
+}
 stage('deploy') {
 steps {
 powershell label: '', script: '''Remove-Item -Path C:\\webpackage\\MusicSite -Recurse -Force
