@@ -32,11 +32,7 @@ nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'musicsite', package
 }
 
 stage('deploy') {
- when {
-                branch "master"
-                environment name: "IS_NEW_VERSION", value: "YES"
-            }
-
+ 
 steps {
 powershell label: '', script: '''Remove-Item -Path C:\\webpackage\\MusicSite -Recurse -Force
 Add-Type -AssemblyName System.IO.Compression.FileSystem
