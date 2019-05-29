@@ -27,12 +27,10 @@ stage('nexus artifacts'){
 steps{
 nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'musicsite', packages: [[$class: 'MavenPackage',mavenAssetList: [[classifier: '', extension: '', filePath: 'C:\\webpackage\\MusicSite.zip']],
  mavenCoordinate: [artifactId: 'musicsite', groupId: 'com.cicd', packaging: 'zip', version: '${BUILD_NUMBER}']]]
-     
 }
 }
 
 stage('deploy') {
- 
 steps {
 powershell label: '', script: '''Remove-Item -Path C:\\webpackage\\MusicSite -Recurse -Force
 Add-Type -AssemblyName System.IO.Compression.FileSystem
@@ -44,6 +42,8 @@ Copy-Item -Recurse -Path $Source -Destination $Dest
 '''
 }
 }
+
+
 
 }
 }
