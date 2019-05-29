@@ -29,14 +29,11 @@ nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'musicsite_JF', pack
  mavenCoordinate: [artifactId: 'musicsite_jf', groupId: 'com.cicd', packaging: 'zip', version: '${BUILD_NUMBER}']]]
 }
 }
-stage('Approval') {	
-            input {
-                message "Should we continue?"
-                ok "Yes, we should."
-                submitter "it-person"
- 	} 
-}
+
 stage('deploy') {
+input {
+message "Should we continue?"
+}
 steps {
 powershell label: '', script: '''Remove-Item -Path C:\\webpackage\\MusicSite -Recurse -Force
 Add-Type -AssemblyName System.IO.Compression.FileSystem
