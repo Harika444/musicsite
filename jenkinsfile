@@ -39,9 +39,7 @@ nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'musicsite', package
     }              
     timeout(time: 10, unit: 'MINUTES') {
                 input(id: "Deploy Gate", message: "Deploy ${params.musicsite}?", ok: 'Deploy')
- 
-    
-    
+                }   
 }
 }
 
