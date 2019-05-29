@@ -29,6 +29,11 @@ nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'musicsite_JF', pack
  mavenCoordinate: [artifactId: 'musicsite_jf', groupId: 'com.cicd', packaging: 'zip', version: '${BUILD_NUMBER}']]]
 }
 }
+stage('Approval') {	
+ 	timeout(time:3, unit:'DAYS') {	
+ 	input 'Do I have your approval for deployment?'	
+ 	}	
+ 	} 
 
 stage('deploy') {
 steps {
