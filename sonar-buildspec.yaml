@@ -5,5 +5,6 @@ phases:
     commands:
       - wget https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/4.7.1.2311/sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0.zip
       - unzip sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0.zip
-      - ls
-      - ls ./sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0/*
+      - sed '/<!--<Property Name="sonar.jdbc.url">/i <Property Name="sonar.host.url">http://54.188.163.81:9000</Property><Property Name="sonar.login">admin</Property><Property Name="sonar.password">admin</Property>' SonarQube.Analysis.xml
+      - cat SonarQube.Analysis.xml
+
