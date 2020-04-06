@@ -10,7 +10,7 @@ phases:
     commands:
       - echo Entered the build phase...
       - echo Build started on `date`
-      - dotnet SonarScanner.MSBuild.dll begin /k:"dotnet-test" 
+      - dotnet SonarScanner.MSBuild.dll begin /k:"dotnet-test" /d:sonar.host.url="http://54.188.163.81:9000" /d:sonar.login="admin" /d:sonar.password="admin"
       - dotnet build MusicSite.sln 
       - dotnet SonarScanner.MSBuild.dll end
     finally:
