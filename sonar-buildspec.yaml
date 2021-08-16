@@ -5,12 +5,12 @@ phases:
     commands:
       - wget https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/4.7.1.2311/sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0.zip
       - unzip sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0.zip
-      - sed '/<SonarQubeAnalysisProperties/a <Property Name="sonar.host.url">http://54.188.163.81:9000</Property><Property Name="sonar.login">admin</Property><Property Name="sonar.password">admin</Property>' SonarQube.Analysis.xml
+      - sed '/<SonarQubeAnalysisProperties/a <Property Name="sonar.host.url">http://54.202.100.5:9000/</Property><Property Name="sonar.login">admin</Property><Property Name="sonar.password">admin</Property>' SonarQube.Analysis.xml
   build:
     commands:
       - echo Entered the build phase...
       - echo Build started on `date`
-      - dotnet SonarScanner.MSBuild.dll begin /k:"dotnet-test" /d:sonar.host.url="http://54.188.163.81:9000" /d:sonar.login="admin" /d:sonar.password="admin"
+      - dotnet SonarScanner.MSBuild.dll begin /k:"dotnet-test" /d:sonar.host.url="http://54.202.100.5:9000/" /d:sonar.login="admin" /d:sonar.password="admin"
       - dotnet build MusicSite.sln 
       - dotnet SonarScanner.MSBuild.dll end
     finally:
